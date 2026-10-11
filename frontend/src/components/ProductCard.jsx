@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function ProductCard({ product, onDelete }) {
-  const role = localStorage.getItem("role");
+  const { role } = useAuth();
 
   return (
     <div style={styles.card}>

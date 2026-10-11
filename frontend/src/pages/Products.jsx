@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import API from "../services/api";
 import ProductCard from "../components/ProductCard";
+import { useAuth } from "../context/AuthContext";
 
 export default function Products() {
+  const { role } = useAuth();
   const [products, setProducts] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
@@ -50,7 +52,9 @@ export default function Products() {
     <div style={styles.container}>
       <div style={styles.header}>
         <h2>Product Inventory</h2>
-        <Link to="/add-product" style={styles.addBtn}>+ Add Product</Link>
+        {role === "admin" && (
+          <Link to="/add-product" style={styles.addBtn}>+ Add Product</Link>
+        )}
       </div>
 
       {loading && <p>Loading products...</p>}
