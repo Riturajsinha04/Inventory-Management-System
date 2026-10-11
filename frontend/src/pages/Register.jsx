@@ -48,7 +48,7 @@ export default function Register() {
     <div style={styles.container}>
       <div style={styles.card}>
         <h2 style={styles.title}>Create Account</h2>
-        <p style={styles.subtitle}>Sign up to start managing or viewing the inventory</p>
+        <p style={styles.subtitle}>Create a new account</p>
 
         <form onSubmit={handleSubmit} style={styles.form}>
           <div style={styles.formGroup}>

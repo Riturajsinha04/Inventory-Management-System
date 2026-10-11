@@ -144,7 +144,7 @@ export default function Products() {
         <div>
           <h2 style={styles.pageTitle}>Inventory Management</h2>
           <p style={styles.pageSubtitle}>
-            Overview of warehouse products, stock counts, and valuation
+            Manage your products and inventory
           </p>
         </div>
         {role === "admin" && (

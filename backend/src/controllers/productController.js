@@ -1,8 +1,6 @@
 import Product from "../models/Product.js";
 
-// @desc    Create a new product
-// @route   POST /api/products
-// @access  Private/Admin
+// Add a new product
 export const createProduct = async (req, res, next) => {
     try {
         const product = new Product(req.body);
@@ -17,9 +15,7 @@ export const createProduct = async (req, res, next) => {
     }
 };
 
-// @desc    Get all products
-// @route   GET /api/products
-// @access  Private (Admin & User)
+// Get all products
 export const getProducts = async (req, res, next) => {
     try {
         const products = await Product.find();
@@ -33,9 +29,7 @@ export const getProducts = async (req, res, next) => {
     }
 };
 
-// @desc    Get a single product by ID
-// @route   GET /api/products/:id
-// @access  Private (Admin & User)
+// Get single product by id
 export const getProductById = async (req, res, next) => {
     try {
         const product = await Product.findById(req.params.id);
@@ -54,9 +48,7 @@ export const getProductById = async (req, res, next) => {
     }
 };
 
-// @desc    Update product details
-// @route   PUT /api/products/:id
-// @access  Private/Admin
+// Update product by id
 export const updateProduct = async (req, res, next) => {
     try {
         const product = await Product.findByIdAndUpdate(
@@ -80,9 +72,7 @@ export const updateProduct = async (req, res, next) => {
     }
 };
 
-// @desc    Delete a product
-// @route   DELETE /api/products/:id
-// @access  Private/Admin
+// Delete product by id
 export const deleteProduct = async (req, res, next) => {
     try {
         const product = await Product.findByIdAndDelete(req.params.id);
@@ -101,9 +91,7 @@ export const deleteProduct = async (req, res, next) => {
     }
 };
 
-// @desc    Update product stock quantity
-// @route   PATCH /api/products/:id/stock
-// @access  Private/Admin
+// Update product stock quantity
 export const updateStock = async (req, res, next) => {
     try {
         const quantity = req.body.quantity;

@@ -41,7 +41,7 @@ export default function Login() {
     <div style={styles.container}>
       <div style={styles.card}>
         <h2 style={styles.title}>Sign In</h2>
-        <p style={styles.subtitle}>Enter your credentials to access your inventory</p>
+        <p style={styles.subtitle}>Sign in to your account</p>
 
         <form onSubmit={handleSubmit} style={styles.form}>
           <div style={styles.formGroup}>

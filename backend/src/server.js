@@ -7,25 +7,21 @@ import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 
 const app = express();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Root & Health check
+// Basic routes
 app.get("/", (req, res) => {
-    res.json({
-        message: "Inventory Management System API is running",
-        status: "online",
-        health: "/api/health",
-        endpoints: {
-            auth: "/api/auth",
-            products: "/api/products",
-        },
-    });
+    res.json({ message: "Inventory Management System API is running" });
 });
 
-app.get("/api/health", (req, res) => res.json({ status: "ok" }));
+app.get("/api/health", (req, res) => {
+    res.json({ status: "ok" });
+});
 
-// Routes
+// API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 

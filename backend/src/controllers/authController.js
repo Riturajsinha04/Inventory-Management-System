@@ -2,16 +2,14 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
-// Generate JWT helper
+// Helper to generate JWT token
 const generateToken = (id, role) => {
     return jwt.sign({ id, role }, process.env.JWT_SECRET, {
         expiresIn: "30d",
     });
 };
 
-// @desc    Register a new user
-// @route   POST /api/auth/register
-// @access  Public
+// Register a new user
 export const registerUser = async (req, res, next) => {
     try {
         const { name, email, password, role } = req.body;
@@ -59,9 +57,7 @@ export const registerUser = async (req, res, next) => {
     }
 };
 
-// @desc    Authenticate user & get token (Login)
-// @route   POST /api/auth/login
-// @access  Public
+// Login user
 export const loginUser = async (req, res, next) => {
     try {
         const { email, password } = req.body;
