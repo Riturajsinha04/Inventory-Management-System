@@ -1,14 +1,15 @@
-
 import Product from "../models/Product.js";
 
-// YE NYA PRODUCT ADD KR RHA H 
+// @desc    Create a new product
+// @route   POST /api/products
+// @access  Private/Admin
 export const createProduct = async (req, res, next) => {
     try {
         const product = new Product(req.body);
         await product.save();
 
         res.status(201).json({
-            message: "product added successfully",
+            message: "Product added successfully",
             product: product,
         });
     } catch (error) {
@@ -16,13 +17,15 @@ export const createProduct = async (req, res, next) => {
     }
 };
 
-// YE PRODUCT SHOW KREGA 
+// @desc    Get all products
+// @route   GET /api/products
+// @access  Private (Admin & User)
 export const getProducts = async (req, res, next) => {
     try {
         const products = await Product.find();
 
         res.status(200).json({
-            message: "products fetched successfully",
+            message: "Products fetched successfully",
             products: products,
         });
     } catch (error) {
@@ -30,14 +33,16 @@ export const getProducts = async (req, res, next) => {
     }
 };
 
-// YE VALI ID USE KRKE EK PRODUCT SHOW KREGA
+// @desc    Get a single product by ID
+// @route   GET /api/products/:id
+// @access  Private (Admin & User)
 export const getProductById = async (req, res, next) => {
     try {
         const product = await Product.findById(req.params.id);
 
         if (!product) {
             return res.status(404).json({
-                message: "product not found",
+                message: "Product not found",
             });
         }
 
@@ -49,7 +54,9 @@ export const getProductById = async (req, res, next) => {
     }
 };
 
-// PRODUCT KI DETAILS KO USE KRKE 
+// @desc    Update product details
+// @route   PUT /api/products/:id
+// @access  Private/Admin
 export const updateProduct = async (req, res, next) => {
     try {
         const product = await Product.findByIdAndUpdate(
@@ -60,12 +67,12 @@ export const updateProduct = async (req, res, next) => {
 
         if (!product) {
             return res.status(404).json({
-                message: "product not found",
+                message: "Product not found",
             });
         }
 
         res.status(200).json({
-            message: "product updated successfully",
+            message: "Product updated successfully",
             product: product,
         });
     } catch (error) {
@@ -73,33 +80,37 @@ export const updateProduct = async (req, res, next) => {
     }
 };
 
-//  PROCUT KO DELAETE KRDEGA
+// @desc    Delete a product
+// @route   DELETE /api/products/:id
+// @access  Private/Admin
 export const deleteProduct = async (req, res, next) => {
     try {
         const product = await Product.findByIdAndDelete(req.params.id);
 
         if (!product) {
             return res.status(404).json({
-                message: "product not found",
+                message: "Product not found",
             });
         }
 
         res.status(200).json({
-            message: "product deleted successfully",
+            message: "Product deleted successfully",
         });
     } catch (error) {
         next(error);
     }
 };
 
-// UPDATE KREGA PRODUCT KI QUANTITY
+// @desc    Update product stock quantity
+// @route   PATCH /api/products/:id/stock
+// @access  Private/Admin
 export const updateStock = async (req, res, next) => {
     try {
         const quantity = req.body.quantity;
 
         if (!Number.isInteger(quantity) || quantity < 0) {
             return res.status(400).json({
-                message: "quantity must be a non-negative integer",
+                message: "Quantity must be a non-negative integer",
             });
         }
 
@@ -111,12 +122,12 @@ export const updateStock = async (req, res, next) => {
 
         if (!product) {
             return res.status(404).json({
-                message: "product not found",
+                message: "Product not found",
             });
         }
 
         res.status(200).json({
-            message: "stock updated successfully",
+            message: "Stock updated successfully",
             product: product,
         });
     } catch (error) {
