@@ -6,8 +6,8 @@ A production-grade, full-stack **Inventory Management System** built with **Reac
 
 ## 👥 Team Members
 
-- **Rituraj Sinha** (Team Lead)
-- **Priyanka** (Teammate)
+- **Rituraj Sinha** - Roll No. 68 (Team Lead)
+- **Priyanka Negi** - Roll No. 62 (Teammate)
 
 ---
 
@@ -172,14 +172,6 @@ npm run build
 ## 📸 Screenshots
 
 *(Add placeholders/screenshots here)*
-
----
-
-## 🔗 Deployment Links
-
-- **Frontend (Vercel):** *[Link Pending]*
-- **Backend (Render/Railway):** https://inventory-management-system-8klf.onrender.com
-- **GitHub Repository URL:** [https://github.com/Riturajsinha04/Inventory-Management-System](https://github.com/Riturajsinha04/Inventory-Management-System)
 
 ---
 
