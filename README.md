@@ -178,7 +178,7 @@ npm run build
 ## 🔗 Deployment Links
 
 - **Frontend (Vercel):** *[Link Pending]*
-- **Backend (Render/Railway):** *[Link Pending]*
+- **Backend (Render/Railway):** https://inventory-management-system-8klf.onrender.com
 - **GitHub Repository URL:** [https://github.com/Riturajsinha04/Inventory-Management-System](https://github.com/Riturajsinha04/Inventory-Management-System)
 
 ---

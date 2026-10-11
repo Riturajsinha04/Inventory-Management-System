@@ -10,6 +10,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Root & Health check
+app.get("/", (req, res) => {
+    res.json({
+        message: "Inventory Management System API is running",
+        status: "online",
+        health: "/api/health",
+        endpoints: {
+            auth: "/api/auth",
+            products: "/api/products",
+        },
+    });
+});
+
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 
 // Routes
