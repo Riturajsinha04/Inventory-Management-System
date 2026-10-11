@@ -1,95 +1,171 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../services/api";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
       const response = await API.post("/auth/login", {
-        email,
+        email: email.trim(),
         password,
       });
 
-      const data = response.data;
-      if (data.token) {
-        localStorage.setItem("token", data.token);
+      const { token, user } = response.data;
+      if (token) {
+        login(token, user);
+        navigate("/products");
+      } else {
+        setError("Login succeeded but no token received.");
       }
-      if (data.user) {
-        localStorage.setItem("name", data.user.name || "");
-        localStorage.setItem("role", data.user.role || "user");
-      }
-
-      navigate("/products");
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed.");
+      setError(err.response?.data?.message || "Invalid email or password.");
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <div style={styles.container}>
-      <h2>Sign In</h2>
+      <div style={styles.card}>
+        <h2 style={styles.title}>Sign In</h2>
+        <p style={styles.subtitle}>Enter your credentials to access your inventory</p>
 
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <input
-          type="email"
-          placeholder="Email address"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <div style={styles.formGroup}>
+            <label style={styles.label}>Email Address</label>
+            <input
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              style={styles.input}
+            />
+          </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+          <div style={styles.formGroup}>
+            <label style={styles.label}>Password</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              style={styles.input}
+            />
+          </div>
 
-        <button type="submit" style={styles.button}>Login</button>
-      </form>
+          <button type="submit" disabled={loading} style={styles.button}>
+            {loading ? "Signing in..." : "Login"}
+          </button>
+        </form>
 
-      {error && <p style={{ color: "red", marginTop: "12px" }}>{error}</p>}
+        {error && <div style={styles.errorBox}>{error}</div>}
 
-      <p style={{ marginTop: "16px" }}>
-        Don&apos;t have an account? <Link to="/register">Register here</Link>
-      </p>
+        <p style={styles.footerText}>
+          Don&apos;t have an account?{" "}
+          <Link to="/register" style={styles.link}>
+            Register here
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
 
 const styles = {
   container: {
-    maxWidth: "400px",
-    margin: "60px auto",
-    padding: "24px",
-    textAlign: "center",
+    minHeight: "75vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "20px",
+  },
+  card: {
+    maxWidth: "420px",
+    width: "100%",
     backgroundColor: "#ffffff",
-    borderRadius: "8px",
+    padding: "36px 32px",
+    borderRadius: "10px",
+    boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)",
     border: "1px solid #e2e8f0",
-    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+    textAlign: "center",
+  },
+  title: {
+    margin: "0 0 8px 0",
+    color: "#0f172a",
+    fontSize: "24px",
+    fontWeight: "700",
+  },
+  subtitle: {
+    margin: "0 0 24px 0",
+    color: "#64748b",
+    fontSize: "14px",
   },
   form: {
     display: "flex",
     flexDirection: "column",
-    gap: "12px",
-    marginTop: "20px",
+    gap: "16px",
+    textAlign: "left",
+  },
+  formGroup: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "6px",
+  },
+  label: {
+    fontSize: "13px",
+    fontWeight: "600",
+    color: "#334155",
+  },
+  input: {
+    padding: "10px 14px",
+    borderRadius: "6px",
+    border: "1px solid #cbd5e1",
+    fontSize: "14px",
+    outline: "none",
   },
   button: {
-    padding: "10px",
+    marginTop: "8px",
+    padding: "11px",
     backgroundColor: "#2563eb",
-    color: "#fff",
+    color: "#ffffff",
     border: "none",
-    borderRadius: "5px",
+    borderRadius: "6px",
     cursor: "pointer",
-    fontWeight: "500",
+    fontSize: "15px",
+    fontWeight: "600",
+  },
+  errorBox: {
+    marginTop: "16px",
+    padding: "10px 14px",
+    backgroundColor: "#fee2e2",
+    color: "#b91c1c",
+    borderRadius: "6px",
+    fontSize: "13px",
+    textAlign: "left",
+  },
+  footerText: {
+    marginTop: "20px",
+    fontSize: "14px",
+    color: "#64748b",
+  },
+  link: {
+    color: "#2563eb",
+    fontWeight: "600",
+    textDecoration: "none",
   },
 };
